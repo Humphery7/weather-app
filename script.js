@@ -5,12 +5,10 @@ const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
 
 async function checkWeather(city="london"){
-    const response = await fetch(apiURL + city +  `&appid=${apiKey}`);
-    if (response.status === 404){
-        document.querySelector(".error").style.display = "block";
-        document.querySelector(".weather").style.display = "none";
-    }
-    else{var data = await response.json();
+
+    try{
+        const response = await fetch(apiURL + city +  `&appid=${apiKey}`);
+        var data = await response.json();
         console.log(data);
     
         document.querySelector(".city").innerHTML= data.name;
@@ -38,7 +36,12 @@ async function checkWeather(city="london"){
         }
     
         document.querySelector(".weather").style.display="block";
-        document.querySelector(".error").style.display = "none";}
+        document.querySelector(".error").style.display = "none";
+    }
+    catch{
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
+    }
     
 }
 
